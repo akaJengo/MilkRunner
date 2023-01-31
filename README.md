@@ -1,4 +1,4 @@
 # MilkRunner
 
-Run with 'npx react-native start' in porject folder
-To start application 'npx react-native run-android'
+Run with `npx expo start` in project folder
+Scan QR code on local internet to run
