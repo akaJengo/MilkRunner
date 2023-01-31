@@ -1,4 +1,13 @@
 # MilkRunner
 
-Run with `npx expo start` in project folder
-Scan QR code on local internet to run
+cd Desktop/MilkRunner/MilkRunnerAPP
+npx expo start
+
+Scan QR code, or open app and join local server
+
+For webapp 
+To build run, 
+npx expo export:web
+
+To open webserver run, 
+npx serve web-build
