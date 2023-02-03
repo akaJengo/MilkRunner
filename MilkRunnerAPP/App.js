@@ -1,11 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
+import { Component } from 'react';
 import { 
   StyleSheet, 
   Text, 
   View,
+  SafeAreaView
 } from 'react-native';
-import Stop from './Back/Stop';
-
+import GUIList from './Front/GUIList';
 
 
 /**
@@ -23,13 +23,17 @@ import Stop from './Back/Stop';
 
  * 
  */
+let guiList = new GUIList;
+
+let gui = "list"
+
 export default function App() {
-  let newstop = new Stop("test"); 
   return (
-    <View style={styles.container}>
-      <Text style = {{fontSize:100}} onPress ={ () => console.log("ur mums a hoe")}>test</Text>
-      <Text>This is a pea can</Text>
-    </View>
+    <SafeAreaView>
+      {gui == "list" &&
+        guiList.render()
+        }
+    </SafeAreaView>
   );
 }
 
