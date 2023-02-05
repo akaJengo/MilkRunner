@@ -2,6 +2,9 @@ import { Component } from "react";
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native"; 
 
 export default class GUIList extends Component {
+    setColorScheme(passedColorScheme) {
+        this.colorScheme = passedColorScheme;
+    }
     render(){
         return (
             <View style={{flex:1, flexDirection:"column"}}>
@@ -15,19 +18,19 @@ export default class GUIList extends Component {
         let topBarStyle = StyleSheet.create({
             bar: {
                 height:60,
+                backgroundColor:this.colorScheme[0],
                 flexDirection:"row"
             },
             menuIcon:{
-                backgroundColor:"red",
                 width:60,
                 justifyContent:"center",
                 alignItems:"center"
             },
             info:{
-                backgroundColor:"orange",
                 flex:1,
                 alignItems:"center",
-                justifyContent:"center"
+                justifyContent:"center",
+                marginRight: 60
             }
         });
         return(
@@ -41,70 +44,84 @@ export default class GUIList extends Component {
             
                 {/* overview */}
                 <View style={topBarStyle.info}>
-                    <Text>Info goes here</Text>
+                    <Text style={{color:'white'}}>
+                    {this.queue.getTotalTimeString()+"   "}
+                    ({this.queue.totalDistance}
+                    {this.queue.defaultUnit})</Text>
                 </View>
             
             </View>
             );
     }
     stopScroller () {
-        // console.log("this is the queue: ", this.queue)
+        console.log(this.colorScheme)
         let stopScrollerStyle = StyleSheet.create({
             scroller:{
                 flex:1,
-                backgroundColor:"dodgerblue"
             }
         });
         return(
             <ScrollView style={stopScrollerStyle.scroller}>
-                {/* {this.stopEntry(this.queue[0])} */}
-                {this.queue.map((entry) => this.stopEntry(entry))}
+                {this.queue.getStops().map((entry, index) => this.stopEntry(entry, index))}
             </ScrollView>
         )
     }
-    stopEntry(stop) {
+    stopEntry(stop, index) {
+        console.log(index)
         // console.log("Logging stop: ", stop)
+        if (stop.completed == true) {
+            var dotColor = this.colorScheme[3]
+        } 
+        else {
+            var dotColor = this.colorScheme[2]
+        }
         let styles = StyleSheet.create({
             entry:{
                 height:60,
-                width:"100%",
-                flexDirection:"row"
+                width:"97%",
+                flexDirection:"row",
+                borderRadius:  5,
+                margin:5,
+                backgroundColor:this.colorScheme[1],
             },
             icon:{
-                backgroundColor:"purple",
-                width:60,
-                height:"100%"
+                width:30,
+                height:30,
+                borderRadius:15,
+                backgroundColor:dotColor,
+                margin:15
             },
             entryLeft:{
-                backgroundColor:"pink", 
                 flex:1
             },
             entryRight:{
-                backgroundColor:"yellow", 
                 flex:1,
-                alignItems:"flex-end"
+                alignItems:"flex-end",
+                marginRight: 5
             },
             address:{
                 position:"absolute", 
-                top:10
+                top:10,
+                // color:"white"
             },
             layover:{
                 position:"absolute", 
-                bottom:10
+                bottom:10,
+                // color:"white"
             },
-            
             priority:{
                 position:"absolute", 
-                top:10
+                top:10,
+                // color:"white"
             },
             time:{
                 position:"absolute", 
-                bottom:10
+                bottom:10,
+                // color:"white"
             }
         })
-        return(<View style={styles.entry}>
+        return(<TouchableOpacity onPress={() => this.handleStopEntryPress(index)} style={styles.entry}>
             <View style={styles.icon}>
-                <Text>Icon</Text>
             </View>
             <View style={styles.entryLeft}>
 
@@ -120,7 +137,10 @@ export default class GUIList extends Component {
                 <Text style={styles.time}>{stop.time.h}:{stop.time.m}</Text>
             
             </View>
-        </View>)
+        </TouchableOpacity>)
+    }
+    handleStopEntryPress(index) {
+        this.queue.removeStop(index)
     }
     updateStops(passedQueue) {
         this.queue = passedQueue;
@@ -129,24 +149,21 @@ export default class GUIList extends Component {
     bottomBar() {
         let bottomBarStyle = StyleSheet.create({
             bar:{
-                backgroundColor:"gold",
+                backgroundColor:this.colorScheme[0],
                 height:60,
                 flexDirection:"row"
             },
             add:{
-                backgroundColor:"hotpink",
                 flex:1,
                 alignItems:"center",
                 justifyContent:"center"
             },
             go:{
-                backgroundColor:"khaki",
                 flex:1, 
                 alignItems:"center",
                 justifyContent:"center"
             },
             delete:{
-                backgroundColor:"lightsalmon",
                 flex:1,
                 alignItems:"center",
                 justifyContent:"center"
@@ -158,25 +175,28 @@ export default class GUIList extends Component {
                
                 {/* add */}
                 <TouchableOpacity onPress={this.handleAddPress} style={bottomBarStyle.add}>
-                    <Text>Add</Text>
+                    <Text style={{color:'white'}}>Add</Text>
                 </TouchableOpacity>
     
                 {/* go  */}
                 <TouchableOpacity onPress={this.handleGoPress} style={bottomBarStyle.go}>
-                    <Text>GO</Text>
+                    <Text style={{color:'white'}}>GO</Text>
                 </TouchableOpacity>
                 
                 {/* delete */}
                 <TouchableOpacity onPress={this.handleDeletePress}style={bottomBarStyle.delete}>
-                    <Text>Reset</Text>
+                    <Text style={{color:'white'}}>Reset</Text>
                 </TouchableOpacity>
             </View>
         )
     }
     handleAddPress() {
+        //bring you to a screen with details on the Stop object. Predictions of text for the address
         console.log("add")
     }
     handleGoPress() {
+        //If start is defined, optimize from start.
+        //If start is not defined , 
         console.log("go")
     }
     handleDeletePress() {

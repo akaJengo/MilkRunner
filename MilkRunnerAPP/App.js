@@ -22,9 +22,11 @@ import GUIList from './Front/GUIList';
  * User, List view with each in order, so that visibility is better for first second, third
  * User, Follow location and automatic remove stops from the queue, so that we don’t go backwards
  * User, Ability to add or remove stops on the go
-
- * 
  */
+
+// Not using these quite yet but we will be
+// npm install @react-navigation/native
+// npm install @react-navigation/drawer
 
 const testStops = [
   new Stop("123 Main St", {h: 5, m: 23}, true, 15),
@@ -142,12 +144,30 @@ const testStops = [
   new Stop("147 Market St", {h: 19, m: 30}, false, 15),
   new Stop("258 Main St", {h: 20, m: 30}, true, 20),
 ]
-let queue = new Queue(testStops); //eventually load from json
+
+// https://coolors.co/515151-ddd1c7-0eb1d2-fc6471
+const colorScheme = [
+  "#515151", //2A2B2A
+  "#DDD1C7",
+  "#0EB1D2",
+  "#FC6471"
+]
+
+let queue = new Queue(testStops, "Km"); //eventually load from json
 let guiList = new GUIList;
 let gui = "list";
 
 export default function App() {
-  guiList.updateStops(queue.getStops());
+
+  testStops[1].completed = true
+  testStops[2].completed = true
+  testStops[4].completed = true
+  testStops[7].completed = true
+  testStops[8].completed = true
+  testStops[9].completed = true
+
+  guiList.setColorScheme(colorScheme)
+  guiList.updateStops(queue);
   return (
     <SafeAreaView style={styles.container}>
       {gui == "list" &&
@@ -161,6 +181,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'grey',
+    backgroundColor: colorScheme[0],
+    color:"white"
   },
 });
