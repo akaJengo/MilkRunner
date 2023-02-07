@@ -1,3 +1,5 @@
+import Stop from "./Stop";
+
 export default class Queue {
     constructor(passedStops, passedDefaultUnit) {
         this.stops = passedStops;
@@ -15,6 +17,15 @@ export default class Queue {
         this.stops.splice(index, 1)
         // console.log(this.stops)
     }
+    addStop(address, time, priority, layover) {
+        this.stops.unshift(new Stop(address, time, priority, layover))
+        return(this)
+    }
+    removeAllStops() {
+        this.stops = []
+        console.log(this.stops)
+        return(this)
+    }
     getOptimizedStops() {
 
     }
@@ -22,11 +33,12 @@ export default class Queue {
         this.stops = passedStops;
     }
     getTotalTimeString() {
+        let newM = ""
         if(this.totalTime.m < 10) {
-            var newM = "0" + String(this.totalTime.m)
+            newM = "0" + String(this.totalTime.m)
         }
         else {
-            var newM = String(this.totalTime.m)
+            newM = String(this.totalTime.m)
         }
         return(String(this.totalTime.h) + ":" + newM)
     }

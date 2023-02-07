@@ -1,9 +1,16 @@
 import { Component } from "react";
 import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native"; 
+import Star from "../assets/star.svg";
+import Bookmark from "../assets/bookmark.svg";
+import Menu from "../assets/menu.svg"
 
 export default class GUIList extends Component {
-    setColorScheme(passedColorScheme) {
-        this.colorScheme = passedColorScheme;
+    constructor(props) {
+        super(props)
+        this.state = {
+            queue:props.queue,
+            colorScheme:props.colorScheme
+        }
     }
     render(){
         return (
@@ -11,6 +18,8 @@ export default class GUIList extends Component {
                 {this.topBar()}
                 {this.stopScroller()}
                 {this.bottomBar()}
+                {this.editing && this.stopEditMenu()}
+                {this.showMenu && this.menu(this)}
             </View>
         );
     }
@@ -18,7 +27,7 @@ export default class GUIList extends Component {
         let topBarStyle = StyleSheet.create({
             bar: {
                 height:60,
-                backgroundColor:this.colorScheme[0],
+                backgroundColor:this.state.colorScheme[0],
                 flexDirection:"row"
             },
             menuIcon:{
@@ -30,50 +39,67 @@ export default class GUIList extends Component {
                 flex:1,
                 alignItems:"center",
                 justifyContent:"center",
-                marginRight: 60
+            },
+            favMenu:{
+                width:60
             }
         });
         return(
-            // bar
             <View style={topBarStyle.bar}> 
         
-                {/* menuIcon */}
-                <View style={topBarStyle.menuIcon}>
-                    <Text>Menu Icon</Text>
-                </View>
+                <TouchableOpacity onPress={() => this.handleMenuPress()}style={topBarStyle.menuIcon}>
+                    <Menu height="80%"/>
+                </TouchableOpacity>
             
-                {/* overview */}
                 <View style={topBarStyle.info}>
                     <Text style={{color:'white'}}>
-                    {this.queue.getTotalTimeString()+"   "}
-                    ({this.queue.totalDistance}
-                    {this.queue.defaultUnit})</Text>
+                    
+                    {this.state.queue.getTotalTimeString()+"   "}
+                    {this.state.queue.totalDistance}
+                    {this.state.queue.defaultUnit}
+                    
+                    </Text>
                 </View>
+
+                <TouchableOpacity onPress={() => this.handleFavoritesPress()} style={topBarStyle.menuIcon}>
+                    <Bookmark height="80%"/>
+                </TouchableOpacity>
             
             </View>
             );
     }
+    handleMenuPress() {
+        console.log("menu")
+    }
+    handleFavoritesPress() {
+        console.log("favorites")
+    }
     stopScroller () {
-        console.log(this.colorScheme)
         let stopScrollerStyle = StyleSheet.create({
             scroller:{
                 flex:1,
             }
         });
-        return(
-            <ScrollView style={stopScrollerStyle.scroller}>
-                {this.queue.getStops().map((entry, index) => this.stopEntry(entry, index))}
-            </ScrollView>
-        )
+        if(this.state.queue == []) {
+            console.log("wtf")
+            return(
+                <Text>this bitch empty</Text>
+            )
+        } else {
+            return(
+                <ScrollView style={stopScrollerStyle.scroller}>
+                    {this.state.queue.getStops().map((entry, index) => this.stopEntry(entry, index))}
+                </ScrollView>
+            )
+        }
     }
     stopEntry(stop, index) {
-        console.log(index)
-        // console.log("Logging stop: ", stop)
+        console.log(stop.getType())
         if (stop.completed == true) {
-            var dotColor = this.colorScheme[3]
+            var dotColor = this.state.colorScheme[3]
         } 
         else {
-            var dotColor = this.colorScheme[2]
+            var dotColor = this.state.colorScheme[2]
         }
         let styles = StyleSheet.create({
             entry:{
@@ -82,7 +108,14 @@ export default class GUIList extends Component {
                 flexDirection:"row",
                 borderRadius:  5,
                 margin:5,
-                backgroundColor:this.colorScheme[1],
+                backgroundColor:this.state.colorScheme[1],
+            },
+            star:{
+                width:15,
+                height:15,
+                position:"absolute",
+                top:4,
+                left:4,
             },
             icon:{
                 width:30,
@@ -95,68 +128,84 @@ export default class GUIList extends Component {
                 flex:1
             },
             entryRight:{
-                flex:1,
+                width:60,
                 alignItems:"flex-end",
                 marginRight: 5
             },
             address:{
                 position:"absolute", 
                 top:10,
-                // color:"white"
             },
             layover:{
                 position:"absolute", 
                 bottom:10,
-                // color:"white"
             },
             priority:{
                 position:"absolute", 
                 top:10,
-                // color:"white"
             },
             time:{
                 position:"absolute", 
                 bottom:10,
-                // color:"white"
             }
         })
-        return(<TouchableOpacity onPress={() => this.handleStopEntryPress(index)} style={styles.entry}>
-            <View style={styles.icon}>
+        return(
+        <TouchableOpacity onLongPress={() => this.handleStopEntryLongPress(index)} onPress={() => this.handleStopEntryPress(index)} style={styles.entry}>
+            
+            <View style={styles.star}>
+                {stop.getType() == "Favorite" && <Star height="100%" width="100%"/>}
             </View>
+
+            <View style={styles.icon}/>
+            
             <View style={styles.entryLeft}>
 
-                <Text style={styles.address}>{stop.address}</Text>
+                <Text style={styles.address}>{stop.getType() == "Stop"?  stop.address: stop.name}</Text>
             
-                <Text style={styles.layover}>{stop.layover}</Text>
+                <Text style={styles.layover}>+{stop.layover}min</Text>
             
             </View>
+            
             <View style={styles.entryRight}>
             
-                <Text style={styles.priority}>{String(stop.priority)}</Text>
+                <Text style={styles.priority}>{stop.priority && "Priority"}</Text>
             
-                <Text style={styles.time}>{stop.time.h}:{stop.time.m}</Text>
+                <Text style={styles.time}>{stop.getTimeInMins() > 0 && "By " + stop.getTimeString()}</Text>
             
             </View>
+        
         </TouchableOpacity>)
     }
     handleStopEntryPress(index) {
-        this.queue.removeStop(index)
+        this.state.queue.stops[index].toggleCompleted()
+        this.updateStops(this.state.queue)
+    }
+    handleStopEntryLongPress(index) {
+        this.editing = true
+        this.forceUpdate()
+    }
+    stopEditMenu() {
+        return(
+            <View style={{height:60, width:60, position:"absolute", top:30, left:30, backgroundColor:"dodgerblue"}}/>
+        )
     }
     updateStops(passedQueue) {
-        this.queue = passedQueue;
-        // console.log("Queue: ", this.queue)
+        this.setState({queue: passedQueue});
     }
     bottomBar() {
         let bottomBarStyle = StyleSheet.create({
             bar:{
-                backgroundColor:this.colorScheme[0],
+                backgroundColor:this.state.colorScheme[0],
                 height:60,
-                flexDirection:"row"
+                flexDirection:"row",
+                marginTop:5
             },
             add:{
                 flex:1,
                 alignItems:"center",
-                justifyContent:"center"
+                justifyContent:"center",
+                borderEndWidth: 1,
+                borderEndColor:this.state.colorScheme[1]
             },
             go:{
                 flex:1, 
@@ -166,7 +215,9 @@ export default class GUIList extends Component {
             delete:{
                 flex:1,
                 alignItems:"center",
-                justifyContent:"center"
+                justifyContent:"center",
+                borderStartWidth: 1,
+                borderStartColor:this.state.colorScheme[1]
             }
         });
         return(
@@ -174,17 +225,17 @@ export default class GUIList extends Component {
             <View style={bottomBarStyle.bar}>
                
                 {/* add */}
-                <TouchableOpacity onPress={this.handleAddPress} style={bottomBarStyle.add}>
+                <TouchableOpacity onPress={() => this.handleAddPress()} style={bottomBarStyle.add}>
                     <Text style={{color:'white'}}>Add</Text>
                 </TouchableOpacity>
     
                 {/* go  */}
-                <TouchableOpacity onPress={this.handleGoPress} style={bottomBarStyle.go}>
+                <TouchableOpacity onPress={() => this.handleGoPress()} style={bottomBarStyle.go}>
                     <Text style={{color:'white'}}>GO</Text>
                 </TouchableOpacity>
                 
                 {/* delete */}
-                <TouchableOpacity onPress={this.handleDeletePress}style={bottomBarStyle.delete}>
+                <TouchableOpacity onPress={() => this.handleDeletePress()}style={bottomBarStyle.delete}>
                     <Text style={{color:'white'}}>Reset</Text>
                 </TouchableOpacity>
             </View>
@@ -192,14 +243,17 @@ export default class GUIList extends Component {
     }
     handleAddPress() {
         //bring you to a screen with details on the Stop object. Predictions of text for the address
-        console.log("add")
+        // this.updateStops(this.state.queue.addStop("test test test"))
+        this.updateStops(this.state.queue.addStop("test addy"))
     }
     handleGoPress() {
-        //If start is defined, optimize from start.
-        //If start is not defined , 
+        //Optimize from current location
         console.log("go")
     }
     handleDeletePress() {
-        console.log("delete")
+        this.clearQueue()
+    }
+    clearQueue() {
+        this.updateStops(this.state.queue.removeAllStops())
     }
 }

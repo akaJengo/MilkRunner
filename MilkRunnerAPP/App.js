@@ -1,10 +1,11 @@
 import { Component } from 'react';
 import { 
   StyleSheet, 
-  Text, 
-  View,
-  SafeAreaView
+  SafeAreaView,
 } from 'react-native';
+import { TouchableHighlight } from 'react-native-web';
+import Favorite from './Back/Favorite';
+
 import Queue from './Back/Queue';
 import Stop from './Back/Stop';
 import GUIList from './Front/GUIList';
@@ -27,122 +28,22 @@ import GUIList from './Front/GUIList';
 // Not using these quite yet but we will be
 // npm install @react-navigation/native
 // npm install @react-navigation/drawer
+// npm install react-native-svg
+// npx expo install react-native-svg@13.4.0
+// npm i --save-dev react-native-svg-transformer
+
+//Icons: https://www.svgrepo.com/collection/iconsax-duotone-filled-icons/1
 
 const testStops = [
   new Stop("123 Main St", {h: 5, m: 23}, true, 15),
-  new Stop("456 Market St", {h: 10, m: 40}, false, 40),
+  new Favorite("Home", "456 Market St", {h: 10, m: 40}, false, 40),
   new Stop("789 Elm St", {h: 11, m: 20}, true, 35),
   new Stop("246 Pine St", {h: 6, m: 59}, false, 20),
-  new Stop("369 Oak St", {h: 0, m: 0}, true, 30),
-  new Stop("159 Maple St", {h: 14, m: 45}, false, 55),
-  new Stop("753 Cedar St", {h: 22, m: 59}, true, 59),
+  new Favorite("Work", "369 Oak St", {h: 0, m: 0}, true, 30),
+  new Favorite("Walmart","159 Maple St", {h: 14, m: 45}, false, 55),
+  new Favorite("Cleaners", "753 Cedar St", {h: 22, m: 59}, true, 59),
   new Stop("147 Cherry St", {h: 9, m: 25}, false, 15),
   new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
-  new Stop("369 Dogwood St", {h: 21, m: 30}, false, 25),
-  new Stop("159 Willow St", {h: 7, m: 45}, true, 30),
-  new Stop("753 Sycamore St", {h: 13, m: 30}, false, 35),
-  new Stop("147 Maple St", {h: 23, m: 59}, true, 40),
-  new Stop("258 Oak St", {h: 8, m: 30}, false, 45),
-  new Stop("369 Pine St", {h: 5, m: 30}, true, 50),
-  new Stop("159 Cedar St", {h: 15, m: 30}, false, 55),
-  new Stop("753 Elm St", {h: 16, m: 30}, true, 59),
-  new Stop("147 Market St", {h: 19, m: 30}, false, 15),
-  new Stop("258 Main St", {h: 20, m: 30}, true, 20),
-  new Stop("123 Main St", {h: 5, m: 23}, true, 15),
-  new Stop("456 Market St", {h: 10, m: 40}, false, 40),
-  new Stop("789 Elm St", {h: 11, m: 20}, true, 35),
-  new Stop("246 Pine St", {h: 6, m: 59}, false, 20),
-  new Stop("369 Oak St", {h: 0, m: 0}, true, 30),
-  new Stop("159 Maple St", {h: 14, m: 45}, false, 55),
-  new Stop("753 Cedar St", {h: 22, m: 59}, true, 59),
-  new Stop("147 Cherry St", {h: 9, m: 25}, false, 15),
-  new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
-  new Stop("369 Dogwood St", {h: 21, m: 30}, false, 25),
-  new Stop("159 Willow St", {h: 7, m: 45}, true, 30),
-  new Stop("753 Sycamore St", {h: 13, m: 30}, false, 35),
-  new Stop("147 Maple St", {h: 23, m: 59}, true, 40),
-  new Stop("258 Oak St", {h: 8, m: 30}, false, 45),
-  new Stop("369 Pine St", {h: 5, m: 30}, true, 50),
-  new Stop("159 Cedar St", {h: 15, m: 30}, false, 55),
-  new Stop("753 Elm St", {h: 16, m: 30}, true, 59),
-  new Stop("147 Market St", {h: 19, m: 30}, false, 15),
-  new Stop("258 Main St", {h: 20, m: 30}, true, 20),  
-  new Stop("123 Main St", {h: 5, m: 23}, true, 15),
-  new Stop("456 Market St", {h: 10, m: 40}, false, 40),
-  new Stop("789 Elm St", {h: 11, m: 20}, true, 35),
-  new Stop("246 Pine St", {h: 6, m: 59}, false, 20),
-  new Stop("369 Oak St", {h: 0, m: 0}, true, 30),
-  new Stop("159 Maple St", {h: 14, m: 45}, false, 55),
-  new Stop("753 Cedar St", {h: 22, m: 59}, true, 59),
-  new Stop("147 Cherry St", {h: 9, m: 25}, false, 15),
-  new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
-  new Stop("369 Dogwood St", {h: 21, m: 30}, false, 25),
-  new Stop("159 Willow St", {h: 7, m: 45}, true, 30),
-  new Stop("753 Sycamore St", {h: 13, m: 30}, false, 35),
-  new Stop("147 Maple St", {h: 23, m: 59}, true, 40),
-  new Stop("258 Oak St", {h: 8, m: 30}, false, 45),
-  new Stop("369 Pine St", {h: 5, m: 30}, true, 50),
-  new Stop("159 Cedar St", {h: 15, m: 30}, false, 55),
-  new Stop("753 Elm St", {h: 16, m: 30}, true, 59),
-  new Stop("147 Market St", {h: 19, m: 30}, false, 15),
-  new Stop("258 Main St", {h: 20, m: 30}, true, 20),
-  new Stop("123 Main St", {h: 5, m: 23}, true, 15),
-  new Stop("456 Market St", {h: 10, m: 40}, false, 40),
-  new Stop("789 Elm St", {h: 11, m: 20}, true, 35),
-  new Stop("246 Pine St", {h: 6, m: 59}, false, 20),
-  new Stop("369 Oak St", {h: 0, m: 0}, true, 30),
-  new Stop("159 Maple St", {h: 14, m: 45}, false, 55),
-  new Stop("753 Cedar St", {h: 22, m: 59}, true, 59),
-  new Stop("147 Cherry St", {h: 9, m: 25}, false, 15),
-  new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
-  new Stop("369 Dogwood St", {h: 21, m: 30}, false, 25),
-  new Stop("159 Willow St", {h: 7, m: 45}, true, 30),
-  new Stop("753 Sycamore St", {h: 13, m: 30}, false, 35),
-  new Stop("147 Maple St", {h: 23, m: 59}, true, 40),
-  new Stop("258 Oak St", {h: 8, m: 30}, false, 45),
-  new Stop("369 Pine St", {h: 5, m: 30}, true, 50),
-  new Stop("159 Cedar St", {h: 15, m: 30}, false, 55),
-  new Stop("753 Elm St", {h: 16, m: 30}, true, 59),
-  new Stop("147 Market St", {h: 19, m: 30}, false, 15),
-  new Stop("258 Main St", {h: 20, m: 30}, true, 20),
-  new Stop("123 Main St", {h: 5, m: 23}, true, 15),
-  new Stop("456 Market St", {h: 10, m: 40}, false, 40),
-  new Stop("789 Elm St", {h: 11, m: 20}, true, 35),
-  new Stop("246 Pine St", {h: 6, m: 59}, false, 20),
-  new Stop("369 Oak St", {h: 0, m: 0}, true, 30),
-  new Stop("159 Maple St", {h: 14, m: 45}, false, 55),
-  new Stop("753 Cedar St", {h: 22, m: 59}, true, 59),
-  new Stop("147 Cherry St", {h: 9, m: 25}, false, 15),
-  new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
-  new Stop("369 Dogwood St", {h: 21, m: 30}, false, 25),
-  new Stop("159 Willow St", {h: 7, m: 45}, true, 30),
-  new Stop("753 Sycamore St", {h: 13, m: 30}, false, 35),
-  new Stop("147 Maple St", {h: 23, m: 59}, true, 40),
-  new Stop("258 Oak St", {h: 8, m: 30}, false, 45),
-  new Stop("369 Pine St", {h: 5, m: 30}, true, 50),
-  new Stop("159 Cedar St", {h: 15, m: 30}, false, 55),
-  new Stop("753 Elm St", {h: 16, m: 30}, true, 59),
-  new Stop("147 Market St", {h: 19, m: 30}, false, 15),
-  new Stop("258 Main St", {h: 20, m: 30}, true, 20),
-  new Stop("123 Main St", {h: 5, m: 23}, true, 15),
-  new Stop("456 Market St", {h: 10, m: 40}, false, 40),
-  new Stop("789 Elm St", {h: 11, m: 20}, true, 35),
-  new Stop("246 Pine St", {h: 6, m: 59}, false, 20),
-  new Stop("369 Oak St", {h: 0, m: 0}, true, 30),
-  new Stop("159 Maple St", {h: 14, m: 45}, false, 55),
-  new Stop("753 Cedar St", {h: 22, m: 59}, true, 59),
-  new Stop("147 Cherry St", {h: 9, m: 25}, false, 15),
-  new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
-  new Stop("369 Dogwood St", {h: 21, m: 30}, false, 25),
-  new Stop("159 Willow St", {h: 7, m: 45}, true, 30),
-  new Stop("753 Sycamore St", {h: 13, m: 30}, false, 35),
-  new Stop("147 Maple St", {h: 23, m: 59}, true, 40),
-  new Stop("258 Oak St", {h: 8, m: 30}, false, 45),
-  new Stop("369 Pine St", {h: 5, m: 30}, true, 50),
-  new Stop("159 Cedar St", {h: 15, m: 30}, false, 55),
-  new Stop("753 Elm St", {h: 16, m: 30}, true, 59),
-  new Stop("147 Market St", {h: 19, m: 30}, false, 15),
-  new Stop("258 Main St", {h: 20, m: 30}, true, 20),
 ]
 
 // https://coolors.co/515151-ddd1c7-0eb1d2-fc6471
@@ -154,29 +55,21 @@ const colorScheme = [
 ]
 
 let queue = new Queue(testStops, "Km"); //eventually load from json
-let guiList = new GUIList;
+// let guiList = new GUIList(queue, colorScheme);
 let gui = "list";
 
 export default function App() {
 
-  testStops[1].completed = true
-  testStops[2].completed = true
-  testStops[4].completed = true
-  testStops[7].completed = true
-  testStops[8].completed = true
-  testStops[9].completed = true
-
-  guiList.setColorScheme(colorScheme)
-  guiList.updateStops(queue);
+  // guiList.setColorScheme(colorScheme)
+  // guiList.updateStops(queue);
   return (
     <SafeAreaView style={styles.container}>
       {gui == "list" &&
-        guiList.render()
+        <GUIList queue={queue} colorScheme={colorScheme}/>
         }
     </SafeAreaView>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -184,4 +77,5 @@ const styles = StyleSheet.create({
     backgroundColor: colorScheme[0],
     color:"white"
   },
+
 });
