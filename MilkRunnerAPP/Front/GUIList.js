@@ -7,6 +7,7 @@ import Menu from "../assets/menu.svg"
 export default class GUIList extends Component {
     constructor(props) {
         super(props)
+        this.algorithm = props.algorithm
         this.state = {
             queue:props.queue,
             colorScheme:props.colorScheme
@@ -88,13 +89,13 @@ export default class GUIList extends Component {
         } else {
             return(
                 <ScrollView style={stopScrollerStyle.scroller}>
-                    {this.state.queue.getStops().map((entry, index) => this.stopEntry(entry, index))}
+                    {this.state.queue.getStops().map((entry, i) => this.stopEntry(entry, i))}
                 </ScrollView>
             )
         }
     }
     stopEntry(stop, index) {
-        console.log(stop.getType())
+        // console.log(stop.getType())
         if (stop.completed == true) {
             var dotColor = this.state.colorScheme[3]
         } 
@@ -247,7 +248,7 @@ export default class GUIList extends Component {
         this.updateStops(this.state.queue.addStop("test addy"))
     }
     handleGoPress() {
-        //Optimize from current location
+        this.state.queue.getCalculate()
         console.log("go")
     }
     handleDeletePress() {

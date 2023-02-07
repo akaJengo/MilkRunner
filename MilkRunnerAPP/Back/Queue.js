@@ -1,13 +1,23 @@
+import AlgorithmPath from "./AlgorithmPath";
 import Stop from "./Stop";
+
+
+// OpenStreetMaps Mapping
 
 export default class Queue {
     constructor(passedStops, passedDefaultUnit) {
-        this.stops = passedStops;
+        this.algorithm = new AlgorithmPath
+        this.stops = passedStops; //array
         this.totalTime = {h:0, m:0}
-        this.totalDistance = 0 
+        this.totalDistance = 0 //float64
         this.defaultUnit = passedDefaultUnit
+
+        //const list = this.algorithm.calculate(); 
         //Km is default (need to find a way to use user default)
         // console.log("This queue stops: ",this.stops)
+    }
+    getCalculate() {
+        this.algorithm.calculate(this.stops)
     }
     getStops() {
         return(this.stops);
