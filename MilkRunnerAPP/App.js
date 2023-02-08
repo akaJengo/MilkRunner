@@ -3,9 +3,10 @@ import {
   StyleSheet, 
   SafeAreaView,
 } from 'react-native';
-import { TouchableHighlight } from 'react-native-web';
-import Favorite from './Back/Favorite';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import AlgorithmPath from './Back/AlgorithmPath';
+import Favorite from './Back/Favorite';
 import Queue from './Back/Queue';
 import Stop from './Back/Stop';
 import GUIList from './Front/GUIList';
@@ -31,6 +32,7 @@ import GUIList from './Front/GUIList';
 // npm install react-native-svg
 // npx expo install react-native-svg@13.4.0
 // npm i --save-dev react-native-svg-transformer
+// npm install @react-native-async-storage/async-storage
 
 //Icons: https://www.svgrepo.com/collection/iconsax-duotone-filled-icons/1
 
@@ -46,6 +48,19 @@ const testStops = [
   new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
 ]
 
+const favs = [
+  new Favorite("Home", "123 Main St.", {h:9, m:0}, false, 12),
+  new Favorite("Work", "456 Market St.", {h:8, m:30}, true, 5),
+  new Favorite("Gym", "789 1st Ave.", {h:7, m:0}, false, 0),
+  new Favorite("School", "111 2nd St.", {h:9, m:45}, true, 10),
+  new Favorite("Library", "222 3rd Ave.", {h:11, m:30}, false, 15),
+  new Favorite("Park", "333 4th St.", {h:12, m:0}, false, 20),
+  new Favorite("Cafe", "444 5th Ave.", {h:10, m:0}, false, 30),
+  new Favorite("Store", "555 6th St.", {h:9, m:30}, false, 40),
+  new Favorite("Restaurant", "666 7th Ave.", {h:19, m:0}, false, 50),
+  new Favorite("Movie Theater", "777 8th St.", {h:20, m:0}, false, 60)
+]
+
 // https://coolors.co/515151-ddd1c7-0eb1d2-fc6471
 const colorScheme = [
   "#515151", //2A2B2A
@@ -54,9 +69,13 @@ const colorScheme = [
   "#FC6471"
 ]
 
+const algorithmPath = new AlgorithmPath;
 let queue = new Queue(testStops, "Km"); //eventually load from json
 // let guiList = new GUIList(queue, colorScheme);
 let gui = "list";
+
+
+
 
 export default function App() {
 
@@ -65,7 +84,11 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       {gui == "list" &&
-        <GUIList queue={queue} colorScheme={colorScheme}/>
+        <GUIList 
+          queue={queue} 
+          colorScheme={colorScheme} 
+          algorithm={algorithmPath}
+        />
         }
     </SafeAreaView>
   );

@@ -1,0 +1,112 @@
+[
+    {
+        "name": "Home",
+        "address": "123 Main St",
+        "time": {
+            "h": 9,
+            "m": 0
+        },
+        "priority": true,
+        "layover": 30,
+        "completed": false
+    },
+    {
+        "name": "Work",
+        "address": "456 Market Ave",
+        "time": {
+            "h": 9,
+            "m": 30
+        },
+        "priority": true,
+        "layover": 45,
+        "completed": false
+    },
+    {
+        "name": "Gym",
+        "address": "789 Fitness Rd",
+        "time": {
+            "h": 10,
+            "m": 15
+        },
+        "priority": false,
+        "layover": 0,
+        "completed": false
+    },
+    {
+        "name": "Grocery Store",
+        "address": "246 Food Lane",
+        "time": {
+            "h": 11,
+            "m": 0
+        },
+        "priority": false,
+        "layover": 15,
+        "completed": false
+    },
+    {
+        "name": "Library",
+        "address": "369 Book Blvd",
+        "time": {
+            "h": 12,
+            "m": 0
+        },
+        "priority": false,
+        "layover": 0,
+        "completed": false
+    },
+    {
+        "name": "Park",
+        "address": "159 Green Way",
+        "time": {
+            "h": 13,
+            "m": 0
+        },
+        "priority": false,
+        "layover": 30,
+        "completed": false
+    },
+    {
+        "name": "Coffee Shop",
+        "address": "753 Java Ave",
+        "time": {
+            "h": 14,
+            "m": 0
+        },
+        "priority": false,
+        "layover": 0,
+        "completed": false
+    },
+    {
+        "name": "Doctor's Office",
+        "address": "924 Health St",
+        "time": {
+            "h": 15,
+            "m": 0
+        },
+        "priority": true,
+        "layover": 30,
+        "completed": false
+    },
+    {
+        "name": "Movie Theater",
+        "address": "135 Cinema Dr",
+        "time": {
+            "h": 16,
+            "m": 0
+        },
+        "priority": false,
+        "layover": 0,
+        "completed": false
+    },
+    {
+        "name": "Restaurant",
+        "address": "726 Dine St",
+        "time": {
+            "h": 17,
+            "m": 0
+        },
+        "priority": false,
+        "layover": 45,
+        "completed": false
+    }
+]

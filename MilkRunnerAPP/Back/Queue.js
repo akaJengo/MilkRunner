@@ -25,10 +25,11 @@ export default class Queue {
     removeStop(index) {
         console.log("removing ", index)
         this.stops.splice(index, 1)
+        return(this)
         // console.log(this.stops)
     }
-    addStop(address, time, priority, layover) {
-        this.stops.unshift(new Stop(address, time, priority, layover))
+    addStop(stop) {
+        this.stops.unshift(stop)
         return(this)
     }
     removeAllStops() {
