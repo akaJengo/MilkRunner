@@ -5,6 +5,11 @@
 `npm install --save react-native-leaflet-view`
 `npm install react react-dom leaflet`
 `npm install react-leaflet`
+`npm install @react-navigation/native`
+`npm install @react-navigation/drawer`
+`npm install react-native-svg`
+`npx expo install react-native-svg@13.4.0`
+`npm i --save-dev react-native-svg-transformer`
 
 `cd Desktop/MilkRunner/MilkRunnerAPP`
 `npx expo start`
