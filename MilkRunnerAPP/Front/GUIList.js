@@ -5,11 +5,11 @@ import Bookmark from "../assets/bookmark.svg";
 import Menu from "../assets/menu.svg"
 import { TouchableWithoutFeedback } from "react-native-web";
 import { getValueFor } from "../App";
+import { DrawerActions } from "@react-navigation/native";
 
 export default class GUIList extends Component {
     constructor(props) {
         super(props)
-        this.algorithm = props.algorithm
         this.state = {
             queue:props.queue,
             colorScheme:props.colorScheme,
@@ -17,7 +17,7 @@ export default class GUIList extends Component {
             showFavs:false
         }
         this.favorites = []
-        console.log(this.favorites)
+        // console.log(this.favorites)
     }
     render(){
         return (
@@ -55,7 +55,7 @@ export default class GUIList extends Component {
         return(
             <View style={topBarStyle.bar}> 
         
-                <TouchableOpacity onPress={() => this.handleMenuPress()}style={topBarStyle.menuIcon}>
+                <TouchableOpacity onPress={this.handleMenuPress}style={topBarStyle.menuIcon}>
                     <Menu height="80%"/>
                 </TouchableOpacity>
             
@@ -77,7 +77,6 @@ export default class GUIList extends Component {
             );
     }
     handleMenuPress() {
-        console.log("menu")
     }
     handleFavoritesPress() {
         // console.log("favorites")

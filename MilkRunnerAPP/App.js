@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import 'react-native-gesture-handler';
+
 import { 
   StyleSheet, 
   SafeAreaView,
@@ -10,6 +11,9 @@ import Favorite from './Back/Favorite';
 import Queue from './Back/Queue';
 import Stop from './Back/Stop';
 import GUIList from './Front/GUIList';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import GUIFavs from './Front/GUIFavs';
 
 
 /**
@@ -26,15 +30,19 @@ import GUIList from './Front/GUIList';
  * User, Ability to add or remove stops on the go
  */
 
-// Not using these quite yet but we will be
 // npm install @react-navigation/native
 // npm install @react-navigation/drawer
+// npx expo install react-native-gesture-handler react-native-reanimated
+
 // npm install react-native-svg
 // npx expo install react-native-svg@13.4.0
 // npm i --save-dev react-native-svg-transformer
+
 // npm install @react-native-async-storage/async-storage
 
 //Icons: https://www.svgrepo.com/collection/iconsax-duotone-filled-icons/1
+//<Drawer.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
+
 
 const testStops = [
   new Stop("123 Main St", {h: 5, m: 23}, true, 15),
@@ -69,29 +77,37 @@ const colorScheme = [
   "#FC6471"
 ]
 
-const algorithmPath = new AlgorithmPath;
 let queue = new Queue(testStops, "Km"); //eventually load from json
 // let guiList = new GUIList(queue, colorScheme);
-let gui = "list";
 
 
-
-
+const Nav = createDrawerNavigator()
 export default function App() {
-
-  // guiList.setColorScheme(colorScheme)
-  // guiList.updateStops(queue);
   return (
-    <SafeAreaView style={styles.container}>
-      {gui == "list" &&
-        <GUIList 
-          queue={queue} 
-          colorScheme={colorScheme} 
-          algorithm={algorithmPath}
-        />
-        }
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={styles.container}>
+        <Nav.Navigator useLegacyImplementation intitialRouteName="List">
+          <Nav.Screen name="List" component={ShowGUIList} 
+              options={{headerShown:false}} />
+          <Nav.Screen name="Favorites" component={ShowGUIFav} options={{headerShown:false}} />
+        </Nav.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
   );
+}
+
+function ShowGUIList({navigation}) {
+  console.log("outside ", navigation)
+  return(<GUIList
+    queue={queue} 
+    colorScheme={colorScheme} 
+  />) 
+}
+
+function ShowGUIFav() {
+  return(<GUIFavs
+
+  />)
 }
 
 const styles = StyleSheet.create({
