@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import axios from 'axios';
-
 import DijkstraSearch from "./DijkstraSearch";
 import Graph from "./Graph";
+
+import axios from 'axios';
+
+
 /**
  * Stop.getType() : String (Inside Stop)
  * OSM Mapping - Library 
@@ -23,35 +23,34 @@ export default class AlgorithmPath {
         for(let i = 0; i < queue.length; i++){
             for(let j = 0; j < queue.length; j++){
                 if(queue[i].address != queue[j].address){
-                    graph.addEdge(queue[i].address, queue[j].address, 1)
+                    try {
+                      graph.addEdge(queue[i].address, queue[j].address, this.calcDistance(queue[i].coord, queue[j].coord))
+                    } catch (error) {}
+                    
                 }
             }
         }
+        console.log("Done!")
         console.log(graph)
+
+        // for (let i = 0; i < queue.length; i++) {
+        //   try {
+        //     console.log(queue[i].coord.lat)
+        //   } catch (err) {}
+        // }
     }
 
-    getLL(address){
-        const [latitude, setLatitude] = useState(null);
-        const [longitude, setLongitude] = useState(null);
-      
-        useEffect(() => {
-          const fetchData = async () => {
-            const response = await axios.get(
-              `https://nominatim.openstreetmap.org/search?q=1600+Amphitheatre+Parkway,+Mountain+View,+CA&format=json`
-            );
-      
-            setLatitude(response.data[0].lat);
-            setLongitude(response.data[0].lon);
-          };
-      
-          fetchData();
-        }, []);
-      
-        return (
-          <View>
-            <Text>Latitude: {latitude}</Text>
-            <Text>Longitude: {longitude}</Text>
-          </View>
-        );
-      };
+    calcDistance(source, destination){
+      const apiUrl = `https://router.project-osrm.org/route/v1/driving/${source.long},${source.lat};${destination.long},${destination.lat}?geometries=geojson&steps=true&alternatives=false&overview=full&annotations=distance`;
+
+      axios.get(apiUrl)
+        .then((response) => {
+          const distanceInMeters = response.data.routes[0].distance;
+          const distanceInKM = distanceInMeters / 1000;
+          console.log(`Distance by road: ${distanceInKM} km`);
+        })
+        .catch((error) => console.warn(error));
+
+      return (distanceInKM)
+    }
 }
