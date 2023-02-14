@@ -1,11 +1,15 @@
+import { DrawerActions } from "@react-navigation/routers"
 import { Component } from "react"
-import { StyleSheet } from "react-native"
+import { StyleSheet, TouchableOpacity } from "react-native"
 import { SafeAreaView, Text } from "react-native"
 import { colorScheme } from "./GlobalConst"
 
 export default class GUIMap extends Component {
     constructor(props) {
         super(props)
+        this.openMenu = () => {
+            props.navigation.dispatch(DrawerActions.openDrawer())
+        }
     }
     render() {
         let style=StyleSheet.create({
@@ -17,7 +21,9 @@ export default class GUIMap extends Component {
             }
         })
         return(<SafeAreaView style={style.container}>
-            <Text>maps r cool</Text>
+            <TouchableOpacity onPress={this.openMenu}>
+                <Text>maps r cool</Text>
+            </TouchableOpacity>
         </SafeAreaView>)
     }
 }

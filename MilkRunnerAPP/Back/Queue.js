@@ -1,5 +1,4 @@
 import AlgorithmPath from "./AlgorithmPath";
-import Stop from "./Stop";
 
 
 // OpenStreetMaps Mapping
