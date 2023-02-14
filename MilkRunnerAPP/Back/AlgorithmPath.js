@@ -26,8 +26,8 @@ export default class AlgorithmPath {
                 if(queue[i].address != queue[j].address){
                     try {
                       graph.addEdge(queue[i].address, queue[j].address, 1)
-                      console.log("Name: ",queue[i].address,"Source: ",queue[i].coord," Name: ",queue[j].address," Destination: ",queue[j].coord)
-                      //console.log(this.calcDistance(queue[i].coord, queue[j].coord))
+                      //console.log("Name: ",queue[i].address,"Source: ",queue[i].coord," Name: ",queue[j].address," Destination: ",queue[j].coord)
+                      console.log(this.calcDistance(queue[i].coord, queue[j].coord))
                       
                     } catch (error) {console.error(error)}
                     
