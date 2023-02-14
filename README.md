@@ -10,7 +10,6 @@
 `npm install react-native-svg`
 `npx expo install react-native-svg@13.4.0`
 `npm i --save-dev react-native-svg-transformer`
-`npm install react-native-geocoding react-native-maps`
 `npm install axios`
 
 `cd Desktop/MilkRunner/MilkRunnerAPP`
