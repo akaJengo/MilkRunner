@@ -1,24 +1,49 @@
-export default class DijkstraSearch{
-    static search(start, finish, graph, distanceType){
-        
-
+const extractMinimum = (queue, dist) => {
+  let minIndex = 0;
+  for (let i = 1; i < queue.length; i++) {
+    if (dist[queue[i]] < dist[queue[minIndex]]) {
+      minIndex = i;
     }
+  }
+  return queue.splice(minIndex, 1)[0];
+};
 
-    static getDistance(node, link, endPoint, distanceType){
+const dijkstra = (graph, startNode, endNode) => {
+  const distances = {};
+  const previousNodes = {};
+  const queue = Object.keys(graph);
 
+  for (const node in graph) {
+    distances[node] = Infinity;
+  }
+
+  distances[startNode] = 0;
+
+  while (queue.length) {
+    const currentNode = extractMinimum(queue, distances);
+    if (currentNode === endNode) break;
+
+    for (const neighbor in graph[currentNode]) {
+      const distance = distances[currentNode] + graph[currentNode][neighbor];
+      if (distance < distances[neighbor]) {
+        distances[neighbor] = distance;
+        previousNodes[neighbor] = currentNode;
+      }
     }
+  }
 
-    static get LINK_LENGTH(){
-        return "LINK_LENGTH"; 
-    }
+  let path = [endNode];
+  let lastNode = endNode;
 
-    static get WEIGHT(){
-        return "WEIGHT"; 
-    }
+  while (lastNode !== startNode) {
+    path.unshift(previousNodes[lastNode]);
+    lastNode = previousNodes[lastNode];
+  }
 
-    static get COORDINATES(){
-        return "COORDINATES"; 
-    }
+  return {
+    distance: distances[endNode],
+    path
+  };
+};
 
-    
-}
+export default dijkstra; 
