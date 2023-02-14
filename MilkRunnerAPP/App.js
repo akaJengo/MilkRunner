@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-
 import { 
   StyleSheet, 
   SafeAreaView,
@@ -15,6 +14,15 @@ import GrayStar from "./assets/grayStar.svg";
 import SettingsIcon from "./assets/settings.svg"
 import MapIcon from "./assets/map.svg"
 import ListIcon from "./assets/list.svg"
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import AlgorithmPath from './Back/AlgorithmPath';
+import Favorite from './Back/Favorite';
+import Queue from './Back/Queue';
+import Stop from './Back/Stop';
+import GUIList from './Front/GUIList';
+import GUIFavs from './Front/GUIFavs';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -135,4 +143,6 @@ const styles = StyleSheet.create({
     color:"white"
   },
 });
+
+
 
