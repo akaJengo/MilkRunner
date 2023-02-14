@@ -5,7 +5,7 @@ export default class Stop {
         this.priority = passedPriority || false
         this.layover = passedLayover || 0
         this.completed = false
-        this.coord = passedCoord //{lat: 0.0, long: 0.0}
+        this.coord = passedCoord //{lat: 0.0, lon: 0.0}
     }
     getType() {
         return("Stop")
