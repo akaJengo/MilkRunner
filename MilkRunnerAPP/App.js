@@ -48,16 +48,6 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 const testStops = [
   new Stop("123 Main St", {h: 5, m: 23}, true, 15, {lat: 40.7128, lon: -74.0060}),
-<<<<<<< Updated upstream
-  new Stop("789 Elm St", {h: 11, m: 20}, true, 35, {lat: 40.7291, lon: -73.9965}),
-  new Stop("246 Pine St", {h: 6, m: 59}, false, 20, {lat: 40.6782, lon: -73.9442}),
-  new Stop("147 Cherry St", {h: 9, m: 25}, false, 15, {lat: 40.7587, lon: -73.9858}),
-  new Stop("258 Birch St", {h: 12, m: 59}, true, 20, {lat: 43.0545, lon: -76.1331}),
-  new Favorite("Work", "369 Oak St", {h: 0, m: 0}, true, 30, {lat: 40.6413, lon: -73.7813}),
-  new Favorite("Walmart","159 Maple St", {h: 14, m: 45}, false, 55, {lat: 40.7152, lon: -74.0145}),
-  new Favorite("Cleaners", "753 Cedar St", {h: 22, m: 59}, true, 59, {lat: 40.7033, lon: -73.9396}),
-  new Favorite("Home", "456 Market St", {h: 10, m: 40}, false, 40, {lat: 40.7850, lon: -73.9682}),
-=======
   new Favorite("Home", "456 Market St", {h: 10, m: 40}, false, 40, {lat: 40.7850, lon: -73.9682}),
   new Stop("789 Elm St", {h: 11, m: 20}, true, 35, {lat: 40.7291, lon: -73.9965}),
   new Stop("246 Pine St", {h: 6, m: 59}, false, 20, {lat: 40.6782, lon: -73.9442}),
@@ -66,7 +56,6 @@ const testStops = [
   new Favorite("Cleaners", "753 Cedar St", {h: 22, m: 59}, true, 59, {lat: 40.7033, lon: -73.9396}),
   new Stop("147 Cherry St", {h: 9, m: 25}, false, 15, {lat: 40.7587, lon: -73.9858}),
   new Stop("258 Birch St", {h: 12, m: 59}, true, 20, {lat: 43.0545, lon: -76.1331}),
->>>>>>> Stashed changes
 ]
 
 const favs = [
