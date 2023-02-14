@@ -1,10 +1,11 @@
 export default class Stop {
-    constructor(passedAddress, passedTime, passedPriority, passedLayover) {
+    constructor(passedAddress, passedTime, passedPriority, passedLayover, passedCoord) {
         this.address = passedAddress || ""
         this.time = passedTime || {h:0, m:0}
         this.priority = passedPriority || false
         this.layover = passedLayover || 0
         this.completed = false
+        this.coord = passedCoord //{lat: 0.0, long: 0.0}
     }
     getType() {
         return("Stop")

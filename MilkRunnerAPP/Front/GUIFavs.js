@@ -9,7 +9,7 @@ export default class GUIFavs extends Component {
     }
     render() {
         return(
-            <View style={{backgroundColor:"red", flex:1}}>
+            <View style={{backgroundColor:"white", flex:1}}>
                 <AddressSearch/>
             </View>
         )
@@ -36,10 +36,9 @@ const AddressSearch = () => {
     console.log(addresses[0].display_name)
     console.log(addresses[0].lon)
     console.log(addresses[0].lat)
+    
   }
   catch(err) {}
-
-  
 
   return (
     <View style={styles.container}>
@@ -56,7 +55,7 @@ const AddressSearch = () => {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <View style={styles.addressItem}>
-              <Text>{item.formatted_address}</Text>
+              <Text style={{color:"blue"}}>{item.formatted_address}</Text>
             </View>
           )}
         />
