@@ -1,4 +1,4 @@
-class Graph {
+export default class Graph {
     constructor() {
       this.nodes = {};
     }
@@ -12,4 +12,6 @@ class Graph {
       this.nodes[node1][node2] = weight;
       this.nodes[node2][node1] = weight;
     }
-  }
+}
+
+
