@@ -1,19 +1,21 @@
 import 'react-native-gesture-handler';
-
 import { 
   StyleSheet, 
   SafeAreaView,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AlgorithmPath from './Back/AlgorithmPath';
 import Favorite from './Back/Favorite';
 import Queue from './Back/Queue';
 import Stop from './Back/Stop';
 import GUIList from './Front/GUIList';
+import GUIFavs from './Front/GUIFavs';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import GUIFavs from './Front/GUIFavs';
+
 
 
 /**
@@ -118,3 +120,4 @@ const styles = StyleSheet.create({
   },
 
 });
+
