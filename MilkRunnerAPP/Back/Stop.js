@@ -6,6 +6,10 @@ export default class Stop {
         this.layover = passedLayover || 0
         this.completed = false
     }
+    getName() {
+        let x = this.address.split(", ")
+        return(x[0] + " " + x[1] + ", " + x[2] + "," + "\n" + x.slice(-3)[0] + " (+" + this.layover + "min)")
+    }
     getType() {
         return("Stop")
     }

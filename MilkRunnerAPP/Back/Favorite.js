@@ -8,4 +8,7 @@ export default class Favorite extends Stop {
     getType() {
         return("Favorite")
     }
+    getName() {
+        return(this.name)
+    }
 }

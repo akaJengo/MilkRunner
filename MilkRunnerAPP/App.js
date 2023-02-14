@@ -6,14 +6,23 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import AlgorithmPath from './Back/AlgorithmPath';
-import Favorite from './Back/Favorite';
-import Queue from './Back/Queue';
-import Stop from './Back/Stop';
+
 import GUIList from './Front/GUIList';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import GUIFavs from './Front/GUIFavs';
+import GUIMap from './Front/GUIMap';
+import GUISettings from './Front/GUISettings';
+
+import { colorScheme } from "./Front/GlobalConst";
+import GrayStar from "./assets/grayStar.svg";
+import SettingsIcon from "./assets/settings.svg"
+import MapIcon from "./assets/map.svg"
+import ListIcon from "./assets/list.svg"
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator, DrawerContent } from '@react-navigation/drawer';
+
 
 
 /**
@@ -86,28 +95,76 @@ export default function App() {
   return (
     <NavigationContainer>
       <SafeAreaView style={styles.container}>
-        <Nav.Navigator useLegacyImplementation intitialRouteName="List">
-          <Nav.Screen name="List" component={ShowGUIList} 
-              options={{headerShown:false}} />
-          <Nav.Screen name="Favorites" component={ShowGUIFav} options={{headerShown:false}} />
+        <Nav.Navigator 
+          useLegacyImplementation 
+          intitialRouteName="List"
+          screenOptions={{
+            drawerStyle:{
+              backgroundColor:colorScheme[0]
+            },
+            drawerItemStyle:{
+              backgroundColor:colorScheme[1]
+            },
+            drawerActiveTintColor:colorScheme[3],
+            drawerHideStatusBarOnOpen:true,
+            }}
+          >
+          <Nav.Screen
+            name="Map"
+            component={GUIMap}
+            options={{
+              headerShown:false,
+              drawerIcon: ({size}) => 
+                <MapIcon 
+                  height={size} 
+                  width={size} 
+                  style={{marginRight: -22}}
+                />
+            }} 
+          />
+          <Nav.Screen 
+            name="List" 
+            component={GUIList} 
+            options={{
+              headerShown:false,
+              drawerIcon: ({size}) => 
+                <ListIcon 
+                  height={size} 
+                  width={size} 
+                  style={{marginRight: -22}}
+                />
+            }}
+          />
+          <Nav.Screen 
+            name="Favorites" 
+            component={GUIFavs} 
+            options={{
+              headerShown:false,
+              drawerIcon: ({size}) => 
+                <GrayStar 
+                  height={size} 
+                  width={size} 
+                  style={{marginRight: -22}}
+                />
+            }} 
+          />
+          <Nav.Screen
+            name="Settings"
+            component={GUISettings}
+            options={{
+              headerShown:false,
+              drawerIcon: ({size}) => 
+                <SettingsIcon 
+                  height={size} 
+                  width={size} 
+                  style={{marginRight: -22}}
+                />
+            }}
+          />
         </Nav.Navigator>
       </SafeAreaView>
     </NavigationContainer>
   );
-}
-
-function ShowGUIList({navigation}) {
-  console.log("outside ", navigation)
-  return(<GUIList
-    queue={queue} 
-    colorScheme={colorScheme} 
-  />) 
-}
-
-function ShowGUIFav() {
-  return(<GUIFavs
-
-  />)
 }
 
 const styles = StyleSheet.create({
@@ -116,5 +173,5 @@ const styles = StyleSheet.create({
     backgroundColor: colorScheme[0],
     color:"white"
   },
-
 });
+
