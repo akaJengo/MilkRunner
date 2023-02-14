@@ -180,7 +180,7 @@ export default class GUIList extends Component {
             }
         })
         return(
-            <TouchableOpacity onPress={() => this.setState(this.state.queue.addStop(fav))} style={style.entry}>
+            <TouchableOpacity key={index+"fav"} onPress={() => this.setState({queue:this.state.queue.addStop(fav), showFavs:false})} style={style.entry}>
                 <View style={style.icon}>
                     <GoldStar height="100%" width="100%"/>
                 </View>
@@ -454,7 +454,8 @@ export default class GUIList extends Component {
                                 0,
                                 {lat:item.lat, long:item.lon} 
                                 )
-                            )
+                            ),
+                        showAdd:false
                         }
                         )} style={style.addressItem}>
                         <AddIcon style={style.addIcon} height={"100%"}/>

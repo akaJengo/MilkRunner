@@ -4,8 +4,6 @@ import {
   StyleSheet, 
   SafeAreaView,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 import GUIList from './Front/GUIList';
 import GUIFavs from './Front/GUIFavs';
@@ -50,44 +48,7 @@ import { createDrawerNavigator, DrawerContent } from '@react-navigation/drawer';
 // npm install @react-native-async-storage/async-storage
 
 //Icons: https://www.svgrepo.com/collection/iconsax-duotone-filled-icons/1
-//<Drawer.Screen name="Home" component={HomeScreen} options={{headerShown: false}}/>
 
-
-const testStops = [
-  new Stop("123 Main St", {h: 5, m: 23}, true, 15),
-  new Favorite("Home", "456 Market St", {h: 10, m: 40}, false, 40),
-  new Stop("789 Elm St", {h: 11, m: 20}, true, 35),
-  new Stop("246 Pine St", {h: 6, m: 59}, false, 20),
-  new Favorite("Work", "369 Oak St", {h: 0, m: 0}, true, 30),
-  new Favorite("Walmart","159 Maple St", {h: 14, m: 45}, false, 55),
-  new Favorite("Cleaners", "753 Cedar St", {h: 22, m: 59}, true, 59),
-  new Stop("147 Cherry St", {h: 9, m: 25}, false, 15),
-  new Stop("258 Birch St", {h: 12, m: 59}, true, 20),
-]
-
-const favs = [
-  new Favorite("Home", "123 Main St.", {h:9, m:0}, false, 12),
-  new Favorite("Work", "456 Market St.", {h:8, m:30}, true, 5),
-  new Favorite("Gym", "789 1st Ave.", {h:7, m:0}, false, 0),
-  new Favorite("School", "111 2nd St.", {h:9, m:45}, true, 10),
-  new Favorite("Library", "222 3rd Ave.", {h:11, m:30}, false, 15),
-  new Favorite("Park", "333 4th St.", {h:12, m:0}, false, 20),
-  new Favorite("Cafe", "444 5th Ave.", {h:10, m:0}, false, 30),
-  new Favorite("Store", "555 6th St.", {h:9, m:30}, false, 40),
-  new Favorite("Restaurant", "666 7th Ave.", {h:19, m:0}, false, 50),
-  new Favorite("Movie Theater", "777 8th St.", {h:20, m:0}, false, 60)
-]
-
-// https://coolors.co/515151-ddd1c7-0eb1d2-fc6471
-const colorScheme = [
-  "#515151", //2A2B2A
-  "#DDD1C7",
-  "#0EB1D2",
-  "#FC6471"
-]
-
-let queue = new Queue(testStops, "Km"); //eventually load from json
-// let guiList = new GUIList(queue, colorScheme);
 
 
 const Nav = createDrawerNavigator()
