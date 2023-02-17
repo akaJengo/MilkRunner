@@ -24,17 +24,6 @@ let testFavs = [
     new Favorite("School", "369 Oak St", { h: 0, m: 0 }, true, 30),
 ];
 
-// let testStops = new Queue([
-//     new Stop("876, Pine Street South, Waconia, Carver County, Minnesota, 55387, United State", { h: 5, m: 23 }, true, 15, { lat: 40.7128, lon: -74.0060 }),
-//     new Favorite("Home", "456 Market St", { h: 10, m: 40 }, false, 40, { lat: 40.7850, lon: -73.9682 }),
-//     new Stop("876, Pine Street, Sault Ste. Marie, Algoma District, Northeastern Ontario, Ontario, P6B 5E6, Canada", { h: 11, m: 20 }, true, 35, { lat: 40.7291, lon: -73.9965 }),
-//     new Stop("1, Valley Road, Nye County, Nevada, United States", { h: 6, m: 59 }, false, 20, { lat: 40.6782, lon: -73.9442 }),
-//     new Favorite("Work", "369 Oak St", { h: 0, m: 0 }, true, 30, { lat: 40.6413, lon: -73.7813 }),
-//     new Favorite("Walmart", "159 Maple St", { h: 14, m: 45 }, false, 55, { lat: 40.7152, lon: -74.0145 }),
-//     new Favorite("Cleaners", "753 Cedar St", { h: 22, m: 59 }, true, 59, { lat: 40.7033, lon: -73.9396 }),
-//     new Stop("12, Alviso, San Jose, Santa Clara County, California, United States", { h: 9, m: 25 }, false, 15, { lat: 40.7587, lon: -73.9858 }),
-//     new Stop("123, Franklin Township, Franklin County, Ohio, United States", { h: 12, m: 59 }, true, 20, { lat: 43.0545, lon: -76.1331 }),
-// ], "Km")
 
 export default class GUIList extends Component {
     constructor(props) {
@@ -201,7 +190,7 @@ export default class GUIList extends Component {
             }
         })
         return (
-            <TouchableOpacity key={index + "fav"} onPress={() => this.addStop(fav)} style={style.entry}>
+            <TouchableOpacity key={index + "fav"} onPress={() => this.updateStops(this.state.queue.addStop(fav))} style={style.entry}>
                 <View style={style.icon}>
                     <GoldStar height="100%" width="100%" />
                 </View>
@@ -334,7 +323,13 @@ export default class GUIList extends Component {
         });
     }
     updateStops(passedQueue) {
-        this.setState({ queue: passedQueue });
+        this.setState({ queue: passedQueue, showAdd:false, showFavs:false }, async () => {
+            try {
+                await AsyncStorage.setItem('stops', JSON.stringify(this.state.queue.getStops()));
+            } catch (error) {
+                console.alert("addStop error: ", error);
+            }
+        });;
     }
     bottomBar() {
         let bottomBarStyle = StyleSheet.create({
@@ -473,14 +468,14 @@ export default class GUIList extends Component {
                             data={addresses}
                             keyExtractor={item => item.id}
                             renderItem={({ item }) => (
-                                <TouchableOpacity onPress={() => this.addStop(
-                                    new Stop(
+                                <TouchableOpacity onPress={() => this.updateStops(
+                                    this.state.queue.addStop(new Stop(
                                         item.display_name,
                                         { h: 0, m: 0 },
                                         false,
                                         0,
                                         { lat: item.lat, lon: item.lon }
-                                    )
+                                    ))
                                 )}
                                     style={style.addressItem}>
                                     {/* {() => this.saveStops()} */}
