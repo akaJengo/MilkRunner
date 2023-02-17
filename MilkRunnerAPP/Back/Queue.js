@@ -13,7 +13,7 @@ export default class Queue {
 
         //const list = this.algorithm.calculate(); 
         //Km is default (need to find a way to use user default)
-        // console.log("This queue stops: ",this.stops)
+        console.log("This queue stops: ",this.stops)
     }
     getCalculate() {
         this.algorithm.calculate(this.stops)

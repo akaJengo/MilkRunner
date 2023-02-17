@@ -6,6 +6,7 @@ export default class Stop {
         this.layover = passedLayover || 0
         this.completed = false
         this.coord = passedCoord
+        console.log("Stop Created")
     }
     getName() {
         let x = this.address.split(", ")

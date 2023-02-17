@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
-import { 
-  StyleSheet, 
-  SafeAreaView,
+import {
+    StyleSheet,
+    SafeAreaView,
 } from 'react-native';
 
 import GUIList from './Front/GUIList';
@@ -18,7 +18,7 @@ import ListIcon from "./assets/list.svg"
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContent } from '@react-navigation/drawer';
 
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
  * Frontline Gui, each screen function(class/file)
@@ -46,91 +46,90 @@ import { createDrawerNavigator, DrawerContent } from '@react-navigation/drawer';
 
 //Icons: https://www.svgrepo.com/collection/iconsax-duotone-filled-icons/1
 
-
-
 const Nav = createDrawerNavigator()
 export default function App() {
-  return (
-    <NavigationContainer>
-      <SafeAreaView style={styles.container}>
-        <Nav.Navigator 
-          useLegacyImplementation 
-          intitialRouteName="List"
-          screenOptions={{
-            drawerStyle:{
-              backgroundColor:colorScheme[0]
-            },
-            drawerItemStyle:{
-              backgroundColor:colorScheme[1]
-            },
-            drawerActiveTintColor:colorScheme[3],
-            drawerHideStatusBarOnOpen:true,
-            }}
-          >
-          <Nav.Screen
-            name="Map"
-            component={GUIMap}
-            options={{
-              headerShown:false,
-              drawerIcon: ({size}) => 
-                <MapIcon 
-                  height={size} 
-                  width={size} 
-                  style={{marginRight: -22}}
-                />
-            }} 
-          />
-          <Nav.Screen 
-            name="List" 
-            component={GUIList} 
-            options={{
-              headerShown:false,
-              drawerIcon: ({size}) => 
-                <ListIcon 
-                  height={size} 
-                  width={size} 
-                  style={{marginRight: -22}}
-                />
-            }}
-          />
-          <Nav.Screen 
-            name="Favorites" 
-            component={GUIFavs} 
-            options={{
-              headerShown:false,
-              drawerIcon: ({size}) => 
-                <GrayStar 
-                  height={size} 
-                  width={size} 
-                  style={{marginRight: -22}}
-                />
-            }} 
-          />
-          <Nav.Screen
-            name="Settings"
-            component={GUISettings}
-            options={{
-              headerShown:false,
-              drawerIcon: ({size}) => 
-                <SettingsIcon 
-                  height={size} 
-                  width={size} 
-                  style={{marginRight: -22}}
-                />
-            }}
-          />
-        </Nav.Navigator>
-      </SafeAreaView>
-    </NavigationContainer>
-  );
+    console.log("reload")
+    return (
+        <NavigationContainer>
+            <SafeAreaView style={styles.container}>
+                <Nav.Navigator
+                    useLegacyImplementation
+                    intitialRouteName="List"
+                    screenOptions={{
+                        drawerStyle: {
+                            backgroundColor: colorScheme[0]
+                        },
+                        drawerItemStyle: {
+                            backgroundColor: colorScheme[1]
+                        },
+                        drawerActiveTintColor: colorScheme[3],
+                        drawerHideStatusBarOnOpen: true,
+                    }}
+                >
+                    <Nav.Screen
+                        name="Map"
+                        component={GUIMap}
+                        options={{
+                            headerShown: false,
+                            drawerIcon: ({ size }) =>
+                                <MapIcon
+                                    height={size}
+                                    width={size}
+                                    style={{ marginRight: -22 }}
+                                />
+                        }}
+                    />
+                    <Nav.Screen
+                        name="List"
+                        component={GUIList}
+                        options={{
+                            headerShown: false,
+                            drawerIcon: ({ size }) =>
+                                <ListIcon
+                                    height={size}
+                                    width={size}
+                                    style={{ marginRight: -22 }}
+                                />
+                        }}
+                    />
+                    <Nav.Screen
+                        name="Favorites"
+                        component={GUIFavs}
+                        options={{
+                            headerShown: false,
+                            drawerIcon: ({ size }) =>
+                                <GrayStar
+                                    height={size}
+                                    width={size}
+                                    style={{ marginRight: -22 }}
+                                />
+                        }}
+                    />
+                    <Nav.Screen
+                        name="Settings"
+                        component={GUISettings}
+                        options={{
+                            headerShown: false,
+                            drawerIcon: ({ size }) =>
+                                <SettingsIcon
+                                    height={size}
+                                    width={size}
+                                    style={{ marginRight: -22 }}
+                                />
+                        }}
+                    />
+                </Nav.Navigator>
+            </SafeAreaView>
+        </NavigationContainer>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colorScheme[0],
-    color:"white"
-  },
+    container: {
+        flex: 1,
+        backgroundColor: colorScheme[0],
+        color: "white"
+    },
 });
 
 
